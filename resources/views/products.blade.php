@@ -25,20 +25,23 @@
 
 
     <main>
-        @foreach ($products as $product )
+        <div class="cards-container">
+
+            @foreach ($products as $product )
             
-        <div class="card">
-            <img src="{{ $product->image }}" alt="DIO">
-            <div class="card-details">
-                <span>{{$product->name}}</span>
-                <div class="card-action">
-                    <span>{{$product->price}}$</span>
-                    <button class="buy-button">+</button>
+            <div class="card">
+                <img src="{{ $product->image }}" alt="DIO">
+                <div class="card-details">
+                    <span>{{$product->name}}</span>
+                    <div class="card-action">
+                        <span>{{$product->price}}$</span>
+                        <button class="buy-button">+</button>
+                    </div>
                 </div>
             </div>
-        </div>
-        @endforeach
-    </body>
+            @endforeach
+        </body>
+    </div>
     </main>
 
 

@@ -4,9 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\ProductsController;
 
-Route::get('/', function () {
-    return view('products');
-});
+Route::get('/',  [ProductsController::class, 'index']);
 
 Route::view('/login', "login")->name('login');
 Route::view('/registro', "register")->name('registro');
