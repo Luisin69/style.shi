@@ -1,15 +1,31 @@
-<html>
+<!DOCTYPE html>
+<html lang="es">
 
     <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Style.shi</title>
         <link rel="stylesheet" href="{{ asset('css/cards.css') }}">
+        <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
     </head>
 
-    <h1>Hola putitas</h1>
-    <h2>putillo</h2>
+    <body>
+        <header>
+            <h1>Style.shi</h1>
+            <div class="header-actions">
+                <a href="{{ route('login')}}">
+                    <button class="login-btn">Iniciar sesion</button>
+                </a>
+                
+                <div class="cart">
+                    <img src="{{ asset('images/cart.svg') }}" alt="Carrito" class="cart-icon">
+                    <span class="cart-count">0</span>
+                </div>
+            </div>
+        </header>
 
 
-
-
+    <main>
     <div class="card">
         <img src="https://media.licdn.com/dms/image/v2/D5603AQEWbu2hOV6hGA/profile-displayphoto-shrink_200_200/profile-displayphoto-shrink_200_200/0/1706800521454?e=2147483647&v=beta&t=Il6DBgOCmJx8Bn9ZHcf1h7TXJ_UsjDDvL7JIn6Lh3xI" alt="DIO">
         <div class="card-details">
@@ -20,6 +36,8 @@
             </div>
         </div>
     </div>
+    </body>
+    </main>
 
 
 
