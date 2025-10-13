@@ -30,7 +30,7 @@ class LoginController extends Controller{
 
         if(Auth::attempt($credentials,$remember)){
             $request->session()->regenerate();
-            return redirect()->intended('privada');
+            return redirect()->intended('productos');
         }else{
             return redirect('login');
         }

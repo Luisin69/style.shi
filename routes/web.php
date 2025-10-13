@@ -5,13 +5,13 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\ProductsController;
 
 Route::get('/', function () {
-    return view('login');
+    return view('products');
 });
 
 Route::view('/login', "login")->name('login');
 Route::view('/registro', "register")->name('registro');
 Route::view('/privada', "secret")->name('privada');
-//Route::view('/productos',"products")->name('productos');
+Route::view('/productos',"products")->name('productos');
 
 Route::post('/validar-registro', [LoginController::class,'register'])->name('validar-registro');
 Route::post('/inicia-sesion', [LoginController::class,'login'])->name('inicia-sesion');
