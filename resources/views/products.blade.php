@@ -17,7 +17,9 @@
                 </a>
                 
                 <div class="cart">
+                    <a href="{{ route('carrito.index')}}">
                     <img src="{{ asset('images/cart.svg') }}" alt="Carrito" class="cart-icon">
+                    </a>
                     <span class="cart-count">0</span>
                 </div>
             </div>
