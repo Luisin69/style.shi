@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Product;
+use Illuminate\Support\Facades\View;
 
 class CarritoController extends Controller
 {
@@ -24,7 +25,7 @@ class CarritoController extends Controller
 
     public function agregar($id)
     {
-        $producto = Producto::findOrFail($id);
+        $producto = Product::findOrFail($id);
         $carrito = session()->get('carrito', []);
 
         // Si el producto ya está en el carrito, aumentar cantidad
@@ -32,9 +33,9 @@ class CarritoController extends Controller
             $carrito[$id]['cantidad']++;
         } else {
             $carrito[$id] = [
-                "nombre" => $producto->nombre,
-                "precio" => $producto->precio,
-                "imagen" => $producto->imagen, // asegúrate de tener este campo en tu base de datos
+                "nombre" => $producto->name,
+                "precio" => $producto->price,
+                "imagen" => $producto->image, // asegúrate de tener este campo en tu base de datos
                 "cantidad" => 1
             ];
         }
@@ -68,5 +69,14 @@ class CarritoController extends Controller
         return view('confirmacion', [
             'mensaje' => '¡Gracias por tu compra! Tu pedido ha sido procesado correctamente.'
         ]);
+    }
+
+    public function boot()
+    {
+        View::composer('*', function ($view) {
+            $carrito = session()->get('carrito', []);
+            $totalItems = array_sum(array_column($carrito, 'cantidad'));
+            $view->with('cartCount', $totalItems);
+        });
     }
 }

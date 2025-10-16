@@ -43,7 +43,7 @@
                 @foreach($carrito as $id => $item)
                 <tr>
                     <td>{{ $item['nombre'] }}</td>
-                    <td><img src="{{ asset('storage/' . $item['imagen']) }}" alt="{{ $item['nombre'] }}"></td>
+                    <td><img src="{{ asset($item['imagen']) }}" alt="{{ $item['nombre'] }}" width="80"></td>
                     <td class="cantidad">{{ $item['cantidad'] }}</td>
                     <td class="precio">${{ number_format($item['precio'], 2) }}</td>
                     <td class="subtotal">${{ number_format($item['precio'] * $item['cantidad'], 2) }}</td>
