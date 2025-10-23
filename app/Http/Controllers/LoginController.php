@@ -17,7 +17,7 @@ class LoginController extends Controller{
         $user->save();
 
         Auth::login($user);
-        return redirect(route('privada'));
+        return redirect()->route('productos.index');
     }
 
     public function login(Request $request){
