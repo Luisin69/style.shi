@@ -58,14 +58,90 @@
         </div>
 
         <div class="acciones">
-            <form action="{{ route('carrito.comprar') }}" method="POST">
+            <!--<form action="{{ route('carrito.comprar') }}" method="POST"> -->
             @csrf
-            <button class="boton-pago">Proceder con el pago</button>
+            <button id="pagoBtn" class="boton-pago">Proceder con el pago</button>
         </div>
     @else
         <p>No tienes productos en el carrito.</p>
     @endif
+   <!-- Fondo oscuro -->
+<div class="overlay hidden" id="overlay">
+  <!-- Caja del pago -->
+  <div class="payment-container">
+    <h2>Detalles de Pago</h2>
+
+    <form action="{{ route('carrito.comprar') }}" method="POST" class="payment-form">
+      @csrf
+        <h3>Dirección de Envío</h3>
+      <div class="form-group">
+        <label for="full-name">Nombre completo</label>
+        <input type="text" id="full-name" name="full-name" placeholder="Juan Pérez" required>
+      </div>
+
+      <div class="form-group">
+        <label for="address">Dirección</label>
+        <input type="text" id="address" name="address" placeholder="Calle 123, Colonia Centro" required>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="city">Ciudad</label>
+          <input type="text" id="city" name="city" placeholder="Ciudad de México" required>
+        </div>
+        <div class="form-group">
+          <label for="zip">Código Postal</label>
+          <input type="text" id="zip" name="zip" placeholder="01234" required>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="country">País</label>
+        <select id="country" name="country" required>
+          <option value="">Selecciona un país</option>
+          <option value="mx">México</option>
+          <option value="us">Estados Unidos</option>
+          <option value="es">España</option>
+          <option value="ar">Argentina</option>
+        </select>
+      </div>
+
+      <h3>Información de Tarjeta</h3>
+      <div class="form-group">
+        <label for="card-name">Nombre en la tarjeta</label>
+        <input type="text" id="card-name" name="card-name" placeholder="Juan Pérez" required>
+      </div>
+
+      <div class="form-group">
+        <label for="card-number">Número de tarjeta</label>
+        <input type="text" id="card-number" name="card-number" maxlength="19" placeholder="XXXX XXXX XXXX XXXX" required>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="exp-date">Fecha de expiración</label>
+          <input type="text" id="exp-date" name="exp-date" maxlength="5" placeholder="MM/AA" required>
+        </div>
+        <div class="form-group">
+          <label for="cvv">CVV</label>
+          <input type="text" id="cvv" name="cvv" maxlength="4" placeholder="123" required>
+        </div>
+      </div>
+      
+      <button type="submit" class="btn-pay">Proceder al pago</button>
+    </form>
+  </div>
+</div>
+
     </main>
+    <script>
+        document.getElementById('pagoBtn').addEventListener('click', function () {
+            const messageDiv = document.getElementById('payment-box');
+            document.getElementById('overlay').classList.remove('hidden');
+            messageDiv.style.display = 'block';
+        });
+    </script>
+    </script>
     </body>
 
 </html>

@@ -224,3 +224,113 @@ main.confirmation-container {
                 width: 70px;
             }
         }
+
+
+.card-payment{
+   
+    display: none;
+    
+}
+body {
+  font-family: 'Poppins', sans-serif;
+}
+
+/* Fondo oscuro del modal */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.65);
+  display: flex;
+  justify-content: center;
+  align-items: flex-start; /* prevent vertical cut-off */
+  overflow-y: auto; /* allow scroll if content is too tall */
+  z-index: 999;
+  padding: 3rem 1rem; /* spacing so modal isn’t glued to edges */
+}
+
+
+/* Caja del formulario */
+.payment-container {
+  background: #fff;
+  padding: 2rem;
+  width: 400px;
+  border-radius: 12px;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.25);
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.payment-container h2 {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  color: #333;
+}
+
+.payment-form h3 {
+  margin-top: 1rem;
+  color: #444;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 5px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  margin-top: 1rem;
+}
+
+.form-group label {
+  font-size: 0.9rem;
+  margin-bottom: 0.3rem;
+  color: #555;
+}
+
+.form-group input,
+.form-group select {
+  padding: 0.6rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  transition: border 0.2s ease;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+  border-color: #4f46e5;
+  outline: none;
+}
+
+.form-row {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.btn-pay {
+  margin-top: 2rem;
+  width: 100%;
+  padding: 0.8rem;
+  background-color: #4f46e5;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.btn-pay:hover {
+  background-color: #3730a3;
+}
+
+/* Si quieres ocultarlo por defecto */
+.overlay.hidden {
+  display: none;
+}
