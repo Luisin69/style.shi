@@ -69,6 +69,14 @@
 <div class="overlay hidden" id="overlay">
   <!-- Caja del pago -->
   <div class="payment-container">
+    <div class="form-group">
+      <label for="payment_method">Método de pago</label>
+      <select id="payment_method" name="payment_method" required>
+        <option value="tarjeta">Tarjeta</option>
+        <option value="oxxo">Oxxo Pay</option>
+        <option value="paypal">PayPal</option>
+      </select>
+    </div>
     <h2>Detalles de Pago</h2>
 
     <form action="{{ route('carrito.comprar') }}" method="POST" class="payment-form">
