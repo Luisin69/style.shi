@@ -64,6 +64,54 @@ class CarritoController extends Controller
 
     public function comprar(Request $request)
     {
+            $request->validate([
+        'full-name' => 'required|string|max:255',
+        'address' => 'required|string|max:255',
+        'city' => 'required|string|max:255',
+        'zip' => 'required|string|max:10',
+        'country' => 'required|string|max:100',
+        'payment_method' => 'required|string',
+
+        // NO guardar datos reales de tarjeta – pero sí validarlos para practicar
+        'card-name' => 'required|string|max:255',
+        'card-number' => 'required|string|max:20',
+        'exp-date' => 'required|string|max:5',
+        'cvv' => 'required|string|max:4',
+    ]);
+
+    // Obtener carrito
+    $carrito = session()->get('carrito', []);
+    $total = 0;
+
+    foreach ($carrito as $item) {
+        $total += $item['precio'] * $item['cantidad'];
+    }
+
+    // GUARDAR la orden en BD
+    $ordenId = \DB::table('ordenes')->insertGetId([
+        'nombre' => $request->input('full-name'),
+        'direccion' => $request->input('address'),
+        'ciudad' => $request->input('city'),
+        'zip' => $request->input('zip'),
+        'pais' => $request->input('country'),
+        'metodo_pago' => $request->input('payment_method'),
+        'total' => $total,
+        'created_at' => now(),
+        'updated_at' => now(),
+    ]);
+
+    // Guardar los productos de la orden en otra tabla
+    foreach ($carrito as $id => $item) {
+        \DB::table('orden_items')->insert([
+            'orden_id' => $ordenId,
+            'producto_id' => $id,
+            'cantidad' => $item['cantidad'],
+            'precio' => $item['precio'],
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+    }
+    
         session()->forget('carrito');
 
         return view('confirmacion', [
