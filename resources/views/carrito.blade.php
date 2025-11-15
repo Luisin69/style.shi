@@ -136,9 +136,9 @@
     </main>
     <script>
         document.getElementById('pagoBtn').addEventListener('click', function () {
-            const messageDiv = document.getElementById('payment-box');
+            //const messageDiv = document.getElementById('payment-box');
             document.getElementById('overlay').classList.remove('hidden');
-            messageDiv.style.display = 'block';
+            //messageDiv.style.display = 'block';
         });
     </script>
     </script>
