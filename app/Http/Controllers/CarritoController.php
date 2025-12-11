@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use Illuminate\Support\Facades\View;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class CarritoController extends Controller
 {
@@ -13,14 +15,14 @@ class CarritoController extends Controller
     {
         // Obtener el carrito guardado en sesión
         $carrito = session()->get('carrito', []);
-
+        $cards = Auth::check() ? Auth::user()->cards : [];
         // Calcular el total
         $total = 0;
         foreach ($carrito as $item) {
             $total += $item['precio'] * $item['cantidad'];
         }
 
-        return view('carrito', compact('carrito', 'total'));
+        return view('carrito', compact('carrito', 'total','cards'));
     }
 
     public function agregar($id)
@@ -61,63 +63,132 @@ class CarritoController extends Controller
         session()->forget('carrito');
         return redirect()->route('carrito.index')->with('success', 'Carrito vaciado.');
     }
-
     public function comprar(Request $request)
-    {
-            $request->validate([
+{
+    // Validar datos
+    $request->validate([
         'full-name' => 'required|string|max:255',
-        'address' => 'required|string|max:255',
-        'city' => 'required|string|max:255',
-        'zip' => 'required|string|max:10',
-        'country' => 'required|string|max:100',
-        'payment_method' => 'required|string',
+        'address'   => 'required|string|max:255',
+        'city'      => 'required|string|max:255',
+        'zip'       => 'required|string|max:10',
+        'country'   => 'required|string|max:100',
 
-        // NO guardar datos reales de tarjeta – pero sí validarlos para practicar
-        'card-name' => 'required|string|max:255',
-        'card-number' => 'required|string|max:20',
-        'exp-date' => 'required|string|max:5',
-        'cvv' => 'required|string|max:4',
+        // Validación de tarjeta guardada
+        'card_id'   => 'required|exists:cards,id',
     ]);
+
+    // Verificar que esa tarjeta pertenece al usuario autenticado
+    $card = Auth::user()->cards()->where('id', $request->card_id)->first();
+
+    if (!$card) {
+        return back()->withErrors(['card_id' => 'La tarjeta seleccionada no te pertenece.']);
+    }
 
     // Obtener carrito
     $carrito = session()->get('carrito', []);
-    $total = 0;
 
+    if (empty($carrito)) {
+        return back()->withErrors(['carrito' => 'El carrito está vacío.']);
+    }
+
+    // Calcular total
+    $total = 0;
     foreach ($carrito as $item) {
         $total += $item['precio'] * $item['cantidad'];
     }
 
-    // GUARDAR la orden en BD
-    $ordenId = \DB::table('ordenes')->insertGetId([
-        'nombre' => $request->input('full-name'),
-        'direccion' => $request->input('address'),
-        'ciudad' => $request->input('city'),
-        'zip' => $request->input('zip'),
-        'pais' => $request->input('country'),
-        'metodo_pago' => $request->input('payment_method'),
-        'total' => $total,
-        'created_at' => now(),
-        'updated_at' => now(),
+    // Guardar la orden
+    $ordenId = DB::table('ordenes')->insertGetId([
+        'nombre'      => $request->input('full-name'),
+        'direccion'   => $request->input('address'),
+        'ciudad'      => $request->input('city'),
+        'zip'         => $request->input('zip'),
+        'pais'        => $request->input('country'),
+        'metodo_pago' => 'tarjeta_guardada',
+        'tarjeta_id'  => $card->id,
+        'total'       => $total,
+        'created_at'  => now(),
+        'updated_at'  => now(),
     ]);
 
-    // Guardar los productos de la orden en otra tabla
+    // Guardar ítems de la orden
     foreach ($carrito as $id => $item) {
-        \DB::table('orden_items')->insert([
-            'orden_id' => $ordenId,
+        DB::table('orden_items')->insert([
+            'orden_id'    => $ordenId,
             'producto_id' => $id,
-            'cantidad' => $item['cantidad'],
-            'precio' => $item['precio'],
-            'created_at' => now(),
-            'updated_at' => now(),
+            'cantidad'    => $item['cantidad'],
+            'precio'      => $item['precio'],
+            'created_at'  => now(),
+            'updated_at'  => now(),
         ]);
     }
-    
-        session()->forget('carrito');
 
-        return view('confirmacion', [
-            'mensaje' => '¡Gracias por tu compra! Tu pedido ha sido procesado correctamente.'
-        ]);
-    }
+    // Vaciar carrito
+    session()->forget('carrito');
+
+    return view('confirmacion', [
+        'mensaje' => '¡Gracias por tu compra! Tu pedido ha sido procesado correctamente.'
+    ]);
+}
+
+//
+    //public function comprar(Request $request)
+    //{
+    //  //  dd($request->all());
+    //        $request->validate([
+    //    'full-name' => 'required|string|max:255',
+    //    'address' => 'required|string|max:255',
+    //    'city' => 'required|string|max:255',
+    //    'zip' => 'required|string|max:10',
+    //    'country' => 'required|string|max:100',
+    //    'payment_method' => 'required|string',
+//
+    //    // NO guardar datos reales de tarjeta – pero sí validarlos para practicar
+    //    'card-name' => '|string|max:255',
+    //    'card-number' => '|string|max:20',
+    //    'exp-date' => '|string|max:5',
+    //    'cvv' => '|string|max:4',
+    //]);
+//
+    //// Obtener carrito
+    //$carrito = session()->get('carrito', []);
+    //$total = 0;
+//
+    //foreach ($carrito as $item) {
+    //    $total += $item['precio'] * $item['cantidad'];
+    //}
+//
+    //// GUARDAR la orden en BD
+    //$ordenId = DB::table('ordenes')->insertGetId([
+    //    'nombre' => $request->input('full-name'),
+    //    'direccion' => $request->input('address'),
+    //    'ciudad' => $request->input('city'),
+    //    'zip' => $request->input('zip'),
+    //    'pais' => $request->input('country'),
+    //    'metodo_pago' => $request->input('payment_method'),
+    //    'total' => $total,
+    //    'created_at' => now(),
+    //    'updated_at' => now(),
+    //]);
+//
+    //// Guardar los productos de la orden en otra tabla
+    //foreach ($carrito as $id => $item) {
+    //    DB::table('orden_items')->insert([
+    //        'orden_id' => $ordenId,
+    //        'producto_id' => $id,
+    //        'cantidad' => $item['cantidad'],
+    //        'precio' => $item['precio'],
+    //        'created_at' => now(),
+    //        'updated_at' => now(),
+    //    ]);
+    //}
+    //
+    //    session()->forget('carrito');
+//
+    //    return view('confirmacion', [
+    //        'mensaje' => '¡Gracias por tu compra! Tu pedido ha sido procesado correctamente.'
+    //    ]);
+    //}
 
     public function boot()
     {

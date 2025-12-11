@@ -1,0 +1,88 @@
+/* Fondo y fuente */
+body {
+    font-family: Arial, sans-serif;
+    background: #222;
+    margin: 0;
+    padding: 20px;
+}
+
+/* Título */
+h1 {
+    text-align: center;
+    font-size: 26px;
+    color: #ffffff;
+    margin-bottom: 25px;
+}
+
+/* Contenedor del formulario */
+form {
+    width: 350px;
+    margin: 0 auto;
+    background: #333;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+}
+
+/* Etiquetas */
+form label {
+    display: block;
+    margin-bottom: 5px;
+    margin-top: 15px;
+    font-weight: bold;
+    color: #ffffff;
+}
+
+/* Inputs */
+form input[type="text"],
+form input[type="number"],
+form input[type="email"],
+form input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    border-radius: 6px;
+    border: 1px solid #444;
+    margin-top: 4px;
+    transition: border 0.2s ease;
+    background-color: #333;
+}
+
+form input:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+/* Botón */
+form button {
+    width: 100%;
+    margin-top: 20px;
+    padding: 12px;
+    font-size: 16px;
+    background: #007bff;
+    border: none;
+    color: white;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+form button:hover {
+    background: #0056b3;
+}
+.return{
+    display: flex;
+    justify-self: flex-end;
+    width: 200px;
+    margin-top: 20px;
+    padding: 12px;
+    font-size: 16px;
+    background: #007bff;
+    border: none;
+    color: white;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: 0.2s ease;
+    text-align: center;
+    text-justify: center;
+    justify-content: center;
+}

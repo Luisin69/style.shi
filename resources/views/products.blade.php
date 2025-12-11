@@ -12,9 +12,24 @@
         <header>
             <h1>Style.shi</h1>
             <div class="header-actions">
+                @guest
+                    
                 <a href="{{ route('login')}}">
                     <button class="login-btn">Iniciar sesion</button>
                 </a>
+                @endguest
+
+                @auth
+        <div class="user-name">
+           <a href="{{ route('cards.index')}}">
+                    <button  class="login-btn">Metodos de pago</button>
+                </a>
+
+                <a href="{{ route('login')}}">
+                    <button class="login-btn">Cerrar sesion</button>
+                </a>
+        </div>
+    @endauth
                 
                 <div class="cart">
                     <a href="{{ route('carrito.index')}}">
@@ -32,7 +47,9 @@
             @foreach ($products as $product)
             
             <div class="card">
-                <img src="{{ $product->image }}" alt="DIO">
+                <div class="img-wrapper">
+    <img src="{{ $product->image }}" alt="">
+</div>
                 <div class="card-details">
                     <span>{{$product->name}}</span>
                     <div class="card-action">

@@ -5,7 +5,7 @@
 
         body {
             font-family: 'Segoe UI', Arial, sans-serif;
-            background-color: #f7f7f7;
+            background-color: #222;
             color: #222;
             margin: 0;
             padding: 0;
@@ -334,3 +334,37 @@ body {
 .overlay.hidden {
   display: none;
 }
+main{
+    background-color: #333;
+    color: white;
+}
+
+thead tr th{
+    background-color: #333;
+}
+
+.payment-container{
+    background-color: #333;
+    color:black;
+}
+
+.payment-container form{
+    color:green;
+}
+
+.payment-form{
+    color:blue;
+}
+
+.form-group label{
+    color:white;
+}
+
+.confirmation-container h2{
+    color:white;
+}
+
+.confirmation-container p{
+    color:white;
+}
+

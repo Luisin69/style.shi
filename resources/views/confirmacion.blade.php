@@ -25,9 +25,9 @@
         </header>
     
     <main class="confirmation-container">
-        <h2>{{ $mensaje }}</h2>
-        <p>Recibirás un correo con los detalles de tu compra.</p>
-        <a href="{{ route('productos.index') }}" class="back-btn">Volver a la tienda</a>
+        <h2 style="color: white">{{ $mensaje }}</h2>
+        <p style="color: white">Recibirás un correo con los detalles de tu compra.</p>
+        <a style="background-color: #0056b3" href="{{ route('productos.index') }}" class="back-btn">Volver a la tienda</a>
     </main>
     </body>
 </html>

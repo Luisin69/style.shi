@@ -20,6 +20,11 @@ class LoginController extends Controller{
         return redirect()->route('productos.index');
     }
 
+    public function showLoginForm() {
+    return view('login');
+}
+
+
     public function login(Request $request){
         $credentials= [
             "email" => $request->email,

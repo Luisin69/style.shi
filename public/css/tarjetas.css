@@ -1,0 +1,121 @@
+/* Contenedor general */
+body {
+    font-family: Arial, sans-serif;
+    background: #222;
+    margin: 0;
+    padding: 20px;
+}
+
+/* Título */
+h1 {
+    font-size: 28px;
+    margin-bottom: 15px;
+    color: #ffffff;
+}
+
+/* Botón agregar tarjeta */
+a[href*="tarjeta"] {
+    display: inline-block;
+    padding: 10px 15px;
+    background: #4CAF50;
+    color: white;
+    text-decoration: none;
+    border-radius: 6px;
+    margin-bottom: 20px;
+    transition: 0.2s ease;
+}
+
+a[href*="tarjeta"]:hover {
+    background: #45a049;
+}
+
+/* Mensaje de éxito */
+p {
+    background: #d4edda;
+    color: #155724;
+    border-left: 5px solid #28a745;
+    padding: 10px;
+    max-width: 350px;
+    border-radius: 4px;
+}
+
+/* Lista de tarjetas */
+ul {
+    list-style: none;
+    padding: 0;
+    margin-top: 20px;
+}
+
+ul li {
+    background: #444;
+    padding: 15px;
+    margin-bottom: 12px;
+    border-radius: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-left: 5px solid #007bff;
+    box-shadow: 0px 2px 4px rgba(0,0,0,0.12);
+}
+
+/* Nombre y número */
+ul li span {
+    font-size: 16px;
+}
+
+/* Botones de Editar y Eliminar */
+ul li a {
+    margin-right: 10px;
+    color: #007bff;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+ul li a:hover {
+    color: #0056b3;
+}
+
+ul li form button {
+    background: #dc3545;
+    color: white;
+    border: none;
+    padding: 6px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+ul li form button:hover {
+    background: #c82333;
+}
+.cont{
+    display: flex;
+    justify-content: space-between;
+}
+.return .login-btn {
+    background-color: #3498db;     /* Blue primary */
+    color: white;
+    padding: 10px 18px;
+    font-size: 16px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.25s ease;
+    font-weight: 500;
+}
+
+.return .login-btn:hover {
+    background-color: #2980b9;     /* Darker blue on hover */
+    transform: translateY(-2px);   /* Small lift effect */
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
+
+.return .login-btn:active {
+    transform: translateY(0);      /* Reset on click */
+    box-shadow: none;
+}
+
+/* Optional: remove underline from the link */
+.return {
+    text-decoration: none;
+}
